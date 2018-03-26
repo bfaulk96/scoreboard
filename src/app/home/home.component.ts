@@ -12,31 +12,37 @@ export class HomeComponent implements OnInit {
   // blueScore: string = "0";
   constructor(private route: ActivatedRoute,
               @Inject('LOCALSTORAGE') private localStorage: any) {
-      const params = this.route.snapshot.params;
-      let num: number = parseInt(params['num']) || 1;
-      const data = route.snapshot.data;
-      const action: string = data.action || "";
-      switch(action) {
-        case "reset":
-          this.localStorage.clear();
-          this.localStorage.setItem('red', 0);
-          this.localStorage.setItem('blue', 0);
-          break;
-        case "incrementBlue":
-          this.localStorage.setItem('blue', parseInt(this.localStorage.getItem('blue')) + num);
-          break;
-        case "incrementRed":
-          this.localStorage.setItem('red', parseInt(this.localStorage.getItem('red')) + num);
-          break;
-        case "setRed":
-          this.localStorage.setItem('red', num);
-          break;
-        case "setBlue":
-          this.localStorage.setItem('blue', num);
-          break;
-        default:
-          break;
-      }
+    if (!this.localStorage.getItem('blue')) {
+      this.localStorage.setItem('blue', 0);
+    }
+    if (!this.localStorage.getItem('red')) {
+      this.localStorage.setItem('red', 0);
+    }
+    const params = this.route.snapshot.params;
+    let num: number = parseInt(params['num']) || 1;
+    const data = route.snapshot.data;
+    const action: string = data.action || "";
+    switch (action) {
+      case "reset":
+        this.localStorage.clear();
+        this.localStorage.setItem('red', 0);
+        this.localStorage.setItem('blue', 0);
+        break;
+      case "incrementBlue":
+        this.localStorage.setItem('blue', parseInt(this.localStorage.getItem('blue')) + num);
+        break;
+      case "incrementRed":
+        this.localStorage.setItem('red', parseInt(this.localStorage.getItem('red')) + num);
+        break;
+      case "setRed":
+        this.localStorage.setItem('red', num);
+        break;
+      case "setBlue":
+        this.localStorage.setItem('blue', num);
+        break;
+      default:
+        break;
+    }
     this.route.queryParams.subscribe(params => {
       if (params['red']) {
         this.localStorage.setItem('red', parseInt(params['red']));
