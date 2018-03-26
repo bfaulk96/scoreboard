@@ -1,0 +1,18 @@
+.scores {
+  color: white;
+  height: 100vh;
+  font-size: 40vw;
+  line-height: 100vh;
+}
+
+.scores .blue {
+  background-color: blue;
+  text-shadow: black 5px 5px;
+  border-left: 5px solid black;
+}
+
+.scores .red {
+  background-color: red;
+  text-shadow: black 5px 5px;
+  border-right: 5px solid black;
+}
