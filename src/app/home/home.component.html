@@ -1,10 +1,39 @@
 <div class="row"></div>
-<div class="row scores">
-  <div class="col red">
-    {{redScore || 0}}
+<div class="select-game" *ngIf="!loading && games.length > 0">
+  <div class="title">
+    <h1>Please select a game to show.</h1>
+    <div class="float-left margin-bottom">
+      <div class="btn btn-sm btn-primary" (click)="getAllGames()">Refresh <i class="fas fa-sync-alt"></i></div>
+    </div>
+    <div class="float-right margin-bottom">
+      <input id="auto-update" type="checkbox" [checked]="autoUpdate" (change)="autoUpdateChanged()" /> <label id="auto-update-label" for="auto-update">Auto-Update</label>
+    </div>
   </div>
-  <div class="col blue">
-    {{blueScore || 0}}
-  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col" colspan="2">Name</th>
+      <th scope="col">Blue Score</th>
+      <th scope="col">Red Score</th>
+      <th scope="col">Winning Score</th>
+      <th scope="col" colspan="2">Last Played</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let game of games; let i = index;" routerLink="game/{{game.gameCode}}">
+      <th scope="row" colspan="2">{{game.gameName}}</th>
+      <td>{{game.blueScore}}</td>
+      <td>{{game.redScore}}</td>
+      <td>{{game.winningScore}}</td>
+      <td colspan="2">{{game.gameUpdateDate | date: 'medium'}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="select-game" *ngIf="loading">
+  <h1>Loading...</h1>
+</div>
+<div class="select-game" *ngIf="!loading && games.length == 0">
+  <h1>There are currently no active games to watch.</h1>
 </div>
 <div class="row"></div>

@@ -1,5 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {ConfigService} from "../config.service";
+import {HttpClient} from "@angular/common/http";
+import {Scoreboard} from "../scoreboard/scoreboard";
 
 
 @Component({
@@ -8,62 +11,55 @@ import {ActivatedRoute, ParamMap} from "@angular/router";
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  // redScore: string = "0";
-  // blueScore: string = "0";
+  loading: boolean = true;
+  autoUpdate: boolean = true;
+  games: Scoreboard[];
+  config: any;
+
   constructor(private route: ActivatedRoute,
-              @Inject('LOCALSTORAGE') private localStorage: any) {
-    if (!this.localStorage.getItem('blue')) {
-      this.localStorage.setItem('blue', 0);
-    }
-    if (!this.localStorage.getItem('red')) {
-      this.localStorage.setItem('red', 0);
-    }
-    const params = this.route.snapshot.params;
-    let num: number = parseInt(params['num']) || 1;
-    const data = route.snapshot.data;
-    const action: string = data.action || "";
-    switch (action) {
-      case "reset":
-        this.localStorage.clear();
-        this.localStorage.setItem('red', 0);
-        this.localStorage.setItem('blue', 0);
-        break;
-      case "incrementBlue":
-        this.localStorage.setItem('blue', parseInt(this.localStorage.getItem('blue')) + num);
-        break;
-      case "incrementRed":
-        this.localStorage.setItem('red', parseInt(this.localStorage.getItem('red')) + num);
-        break;
-      case "setRed":
-        this.localStorage.setItem('red', num);
-        break;
-      case "setBlue":
-        this.localStorage.setItem('blue', num);
-        break;
-      default:
-        break;
-    }
-    this.route.queryParams.subscribe(params => {
-      if (params['red']) {
-        this.localStorage.setItem('red', parseInt(params['red']));
-      }
-      if (params['blue']) {
-        this.localStorage.setItem('blue', parseInt(params['blue']));
-      }
-    });
+              private router: Router,
+              private configService: ConfigService,
+              private http: HttpClient) {
   }
 
   ngOnInit() {
-
+    setTimeout(() => {
+      this.getAllGames();
+    }, 500);
+    this.delayUpdateGames();
   }
 
-  get blueScore() {
-    return this.localStorage.getItem('blue') || "0";
+  getAllGames() {
+    this.getGames().subscribe(
+      data => {
+        this.games = data.activeGames;
+        this.loading = false;
+      },
+      err => console.error(err),
+      () => {
+        console.log('done loading games');
+        this.loading = false;
+      }
+    );
   }
 
-  get redScore() {
-    return this.localStorage.getItem('red') || "0";
-
+  getGames() {
+    return this.http.get<{"activeGames" : Scoreboard[]}>(this.configService.data.apiURL + '/games');
   }
 
+  delayUpdateGames() {
+    setTimeout(() => {
+      if (this.autoUpdate) {
+        this.getAllGames();
+        this.delayUpdateGames()
+      }
+    }, 10000);
+  }
+
+  autoUpdateChanged() {
+    this.autoUpdate = !this.autoUpdate;
+    if (this.autoUpdate) {
+      this.delayUpdateGames()
+    }
+  }
 }

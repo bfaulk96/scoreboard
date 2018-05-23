@@ -5,41 +5,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 
+import { HttpClientModule } from "@angular/common/http";
+import { ScoreboardComponent } from './scoreboard/scoreboard.component';
+import {ConfigService} from "./config.service";
+import { DatePipe } from '@angular/common';
+
+
 const appRoutes: Routes = [
   { path: '',
     component: HomeComponent
   },
-  { path: 'new',
-    component: HomeComponent,
-    data: {action: 'reset'}
-  },
-  { path: 'red/:num',
-    component: HomeComponent,
-    data: {action: 'setRed'}
-  },
-  { path: 'blue/:num',
-    component: HomeComponent,
-    data: {action: 'setBlue'}
-  },
-  { path: 'increment-blue',
-    component: HomeComponent,
-    data: {action: 'incrementBlue'}
-  },
-  { path: 'increment-blue/:num',
-    component: HomeComponent,
-    data: {action: 'incrementBlue'}
-  },
-  { path: 'increment-red',
-    component: HomeComponent,
-    data: {action: 'incrementRed'}
-  },
-  { path: 'increment-red/:num',
-    component: HomeComponent,
-    data: {action: 'incrementRed'}
-  },
-  { path: 'reset',
-    component: HomeComponent,
-    data: {action: 'reset'}
+  {
+    path: 'game/:code',
+    component: ScoreboardComponent
   },
   { path: '**',
     redirectTo: '/',
@@ -50,15 +28,21 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     HomeComponent,
+    ScoreboardComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
     )
   ],
-  providers: [{ provide: 'LOCALSTORAGE', useFactory: getLocalStorage }],
+  providers: [
+    { provide: 'LOCALSTORAGE', useFactory: getLocalStorage },
+    DatePipe,
+    ConfigService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
