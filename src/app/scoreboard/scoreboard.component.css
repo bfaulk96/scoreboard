@@ -2,6 +2,9 @@
   color: white;
   height: 100vh;
   font-size: 40vw;
+}
+
+.line-height-100 {
   line-height: 100vh;
 }
 
@@ -15,6 +18,45 @@
   background-color: red;
   text-shadow: black 5px 5px;
   border-right: 5px solid black;
+}
+
+.black-text {
+  color: black;
+  text-shadow: none;
+}
+
+.red-text {
+  color: red;
+  text-shadow: black 2px 2px;
+}
+
+.blue-text {
+  color: blue;
+  text-shadow: black 2px 2px;
+}
+
+.final-score-view {
+  padding-top: 20vh;
+  display: inline-block;
+  vertical-align: middle;
+  height: 100vh;
+}
+
+.winner {
+  font-size: 20vh;
+  /*display: inline-block;*/
+}
+
+.final-score {
+  font-size: 10vh;
+  background-color: white;
+  width: 100vw;
+  /*display: inline-block;*/
+  /*vertical-align: +1000px;*/
+}
+
+.break {
+  height: 0;
 }
 
 .top-nav {

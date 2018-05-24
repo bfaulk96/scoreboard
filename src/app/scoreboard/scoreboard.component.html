@@ -17,12 +17,18 @@
     <div class="btn btn-dark select-game" routerLink="/">Select Game <i class="fas fa-volleyball-ball"></i></div>
   </div>
 </div>
-<div *ngIf="!loading" class="row scores">
+<div *ngIf="!loading && !game.gameFinished" class="row scores line-height-100">
   <div class="col red">
     {{game.blueScore || 0}}
   </div>
   <div class="col blue">
     {{game.redScore || 0}}
+  </div>
+</div>
+<div *ngIf="!loading && game.gameFinished" class="row scores">
+  <div class="col {{game.redScore > game.blueScore? 'red' : 'blue'}} final-score-view">
+    <div class="winner">{{game.redScore > game.blueScore? "Red" : "Blue"}} Wins!</div>
+    <div class="final-score"><span class="red-text">{{game.redScore}}</span> <span class="black-text">-</span> <span class="blue-text">{{game.blueScore}}</span></div>
   </div>
 </div>
 <div class="row"></div>
