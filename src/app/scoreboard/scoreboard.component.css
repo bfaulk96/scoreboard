@@ -22,18 +22,46 @@
   position: absolute;
   background: rgba(0, 0, 0, 0.3);
   color: white;
-  width: 100%;
+  width: 100vw;
   margin-right: 0;
   margin-left: 0;
+  padding-right: 15px;
   text-align: center;
   z-index: 10000;
 }
 
 .game-name {
-  font-size: 4em;
-  /*display: inline-block;*/
+  font-size: calc(4em);
   vertical-align: middle;
   margin: auto;
+}
+
+.collapse-title-float {
+  margin: 3em auto auto;
+}
+
+.collapse-title {
+  float: left;
+  cursor: pointer;
+  color: rgba(255, 255, 255, .5);
+}
+
+.show-title {
+  z-index: 10001;
+  float: left;
+  position: absolute;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.1);
+  color: rgba(255, 255, 255, .5);
+  margin: 10px 25px auto 25px;
+  width: 120px;
+  padding: 0 5px 5px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  -moz-border-radius-bottomleft: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
 }
 
 .select-game-float {
@@ -45,7 +73,14 @@
 .select-game {
   float: right;
   margin: auto;
-  /*display: inline-block;*/
   vertical-align: middle;
-  /*margin: auto;*/
+}
+
+.title-bar {
+  float: top;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.1);
+  width: 100vw;
+  height: 10px;
+  z-index: 10000;
 }

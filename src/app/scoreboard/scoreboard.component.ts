@@ -13,6 +13,8 @@ export class ScoreboardComponent implements OnInit {
   code: string;
   game: Scoreboard;
   loading: boolean = true;
+  showTitle: boolean = true;
+  showTitlePreview: boolean = false;
   constructor(private route: ActivatedRoute,
               private http: HttpClient,
               private configService: ConfigService) {
@@ -48,5 +50,22 @@ export class ScoreboardComponent implements OnInit {
       this.getGame();
       this.refreshGame();
     }, 5000)
+  }
+
+  hideTitle() {
+    this.showTitle = false;
+    this.showTitlePreview = false;
+  }
+
+  showTitleNav() {
+    this.showTitle = true;
+  }
+
+  showTitleNavPreview() {
+    this.showTitlePreview = true;
+  }
+
+  hideTitlePreview() {
+    this.showTitlePreview = false;
   }
 }

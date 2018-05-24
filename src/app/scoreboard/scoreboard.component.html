@@ -1,12 +1,23 @@
 <div class="row"></div>
-<div class="top-nav row">
-  <div class="col"></div>
-  <h1 class="col game-name">{{game.gameName}}</h1>
+<div *ngIf="!loading && !showTitle && !showTitlePreview" id="title-bar" class="row title-bar" (mouseover)="showTitleNavPreview()"></div>
+<div *ngIf="!loading && !showTitle && !showTitlePreview" class="show-title" (click)="showTitleNav()">
+  Show title <i class="fas fa-chevron-down"></i>
+</div>
+<div class="row top-nav" id="title" *ngIf="!loading && (showTitle || showTitlePreview)" (mouseleave)="hideTitlePreview()">
+  <div class="col collapse-title-float">
+    <div *ngIf="showTitle" class="collapse-title" (click)="hideTitle()">
+      Hide title <i class="fas fa-chevron-up"></i>
+    </div>
+    <div *ngIf="!showTitle && showTitlePreview" class="collapse-title" (click)="showTitleNav()">
+      Show title <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+  <h1 class="col col-7 game-name">{{game.gameName}}</h1>
   <div class="col select-game-float">
-    <div class="btn btn-dark select-game" routerLink="/">Select Game</div>
+    <div class="btn btn-dark select-game" routerLink="/">Select Game <i class="fas fa-volleyball-ball"></i></div>
   </div>
 </div>
-<div class="row scores">
+<div *ngIf="!loading" class="row scores">
   <div class="col red">
     {{game.blueScore || 0}}
   </div>
