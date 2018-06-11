@@ -19,10 +19,10 @@
 </div>
 <div *ngIf="!loading && !game.gameFinished" class="row scores line-height-100">
   <div class="col red">
-    {{game.blueScore || 0}}
+    {{game.redScore || 0}}
   </div>
   <div class="col blue">
-    {{game.redScore || 0}}
+    {{game.blueScore || 0}}
   </div>
 </div>
 <div *ngIf="!loading && game.gameFinished" class="row scores">
